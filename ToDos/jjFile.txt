@@ -1,0 +1,4 @@
+asd,egg,true
+hi,tomi,false
+as,ff,true
+asd,ggggg,false
