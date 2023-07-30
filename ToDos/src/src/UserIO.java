@@ -21,7 +21,7 @@ public class UserIO {
                 String username = userData[0];
                 String password = userData[1];
                 String externkey = userData[2];
-                listOfUsers.add(new User(username, password,  Integer.parseInt(externkey)));
+                listOfUsers.add(new User(username, password,  externkey));
             }
         }
         reader.close();

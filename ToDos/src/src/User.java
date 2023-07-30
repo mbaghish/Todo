@@ -4,7 +4,7 @@ package src;
 public class User {
     private String username;
     private String password;
-    private int externkey;
+    private String externkey;
     private boolean readOnly; // New property to indicate read-only access
 
     public boolean isReadOnly() {
@@ -20,7 +20,7 @@ public class User {
 //        this.password = password;
 //    }
 
-	User (String username, String password, int externkey)
+	User (String username, String password, String externkey)
     {
         this.username = username;
         this.password = password;
@@ -34,20 +34,15 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	public void setExternkey(String externkey) {
+		this.externkey = externkey;
+	}
 	String getUsername() {return username;}
     String getPassword() {return password;}
+    String getExternkey() {return externkey;}
  // Getter for read-only property
     public boolean hasReadOnlyAccess() {
         return readOnly;
     }
-
-	public int getExternkey() {
-		return externkey;
-	}
-
-	public void setExternkey(int externkey) {
-		this.externkey = externkey;
-	}
 
 }

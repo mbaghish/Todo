@@ -1,12 +1,10 @@
 package src;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,7 +15,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class ReadOnlyGUI {
+	
 	static void createAndShowReadOnlyGUI(String FILE_PATH) {
+		
         JFrame frame = new JFrame("ToDo List (Read-Only)");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(700, 600);
@@ -42,10 +42,7 @@ public class ReadOnlyGUI {
         JPanel buttonPanel = new JPanel();
       
         buttonPanel.add(viewListButton);
-       
         buttonPanel.add(markDoneButton);
-     
-       
         buttonPanel.add(searchTextField);
         buttonPanel.add(searchButton);
         buttonPanel.add(exitButton);
@@ -90,7 +87,6 @@ public class ReadOnlyGUI {
                 }
                 taskListTextArea.setText(sb.toString());
             }
-            
         });
         
         viewListButton.addActionListener(new ActionListener() {
@@ -110,14 +106,13 @@ public class ReadOnlyGUI {
                      }
                  }
                  taskListTextArea.setText(sb.toString());
-               
             }
         });
         
         markDoneButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String input = JOptionPane.showInputDialog(frame, "Enter the task number to mark as done:");
+                 String input = JOptionPane.showInputDialog(frame, "Enter the task number to mark as done:");
                 int taskNumber = Integer.parseInt(input);
 
                 if (taskNumber >= 1 && taskNumber <= Main.tasks.size()) {
