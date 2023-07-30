@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 public class GUI {
 	static void createAndShowGUI( String FILE_PATH) {
         JFrame frame = new JFrame("ToDo List");
