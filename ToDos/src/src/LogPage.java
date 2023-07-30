@@ -15,12 +15,10 @@ public class LogPage {
 	
 
     static void startLoggin() {
-    	
-    
 
         String username;
         String password;
-        int externkey=11111;
+        String externkey = null;
         User loggedInUser = null;
 
         // Create an empty list to hold users
@@ -67,7 +65,7 @@ public class LogPage {
 
             gbc.gridy++;
             JTextField usernameField = new JTextField(15);
-            usernameField.setForeground(Color.WHITE); // Set text color to white
+            //usernameField.setForeground(Color.WHITE); // Set text color to white
             newUserPanel.add(usernameField, gbc);
 
             gbc.gridy++;
@@ -100,9 +98,9 @@ public class LogPage {
                     JOptionPane.showMessageDialog(null, "Username is already taken. Please choose a different username.");
                     return;
                 }
-                int randomNumber = generateRandomNumber(10000, 99999);
+                int randomNumber = generateRandomNumber(1000, 9999);
                 System.out.println("please note, your extern key is: " + randomNumber);
-                externkey=randomNumber;
+                externkey= randomNumber+"";
                 JOptionPane.showMessageDialog(null, "please note, your extern key is: " + randomNumber);
                 listOfUsers.add(new User(username, password,externkey));
 
@@ -186,18 +184,91 @@ public class LogPage {
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
-                    GUI.createAndShowGUI(FILE_PATH);
+                    GUI.createAndShowGUI(FILE_PATH,loggedInUser.getUsername());
                     System.out.println("User \"" + loggedInUser.getUsername() + "\" logged in!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Invalid username/password combination!");
+                }
+            } else {
+                return;// User canceled login
+            }
+
+
+        } else if(choice == JOptionPane.NO_OPTION) {// Logic for "Log in as extern" option
+        	 // Get input for logging in
+            JPanel loginPanel = new JPanel(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.insets = new Insets(5, 5, 5, 5);
+            loginPanel.add(new JLabel("Please type the username:"), gbc);
+
+            gbc.gridy++;
+            JTextField usernameField = new JTextField(15);
+            loginPanel.add(usernameField, gbc);
+
+            gbc.gridy++;
+            loginPanel.add(new JLabel("Please type extern key:"), gbc);
+
+            gbc.gridy++;
+            JPasswordField passwordField = new JPasswordField(15);
+            loginPanel.add(passwordField, gbc);
+
+            int loginChoice = JOptionPane.showConfirmDialog(
+                    null,
+                    loginPanel,
+                    "Login",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.PLAIN_MESSAGE
+            );
+
+            if (loginChoice == JOptionPane.OK_OPTION) {
+                username = usernameField.getText().trim();
+                char[] passwordChars = passwordField.getPassword();
+                password = new String(passwordChars);
+
+                if (username.isEmpty() || password.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Username and extern key cannot be empty.");
+                    return;
+                }
+
+                // Iterate through the list of users to see if we have a match
+                for (User user : listOfUsers) {
+                    if (user.getUsername().equals(username) && user.getExternkey().equals(password)) {//name and extern key
+                        loggedInUser = user;
+                        break;
+                    }
+                }
+
+                // If loggedInUser was changed from null, the login was successful
+                if (loggedInUser != null) {
+                    String FILE_PATH = loggedInUser.getUsername() + "File.txt";
+                    File myObj = new File(FILE_PATH);
+                    try {
+                        if (myObj.createNewFile()) {
+                            System.out.println("File created: " + myObj.getName());
+                        } else {
+                            System.out.println(myObj.getName() + " already exists.");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    Splash.showSplashScreenEnd("wellcome to \"" + loggedInUser.getUsername() + "\"s Todo List!", 1000);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    GUI.createAndShowReadOnlyGUI(FILE_PATH);
+                    System.out.println("An extern logged in!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Invalid username/password combination!");
                 }
             } else {
                 // User canceled login
                 return;
-            }
-
-        } else if(choice == JOptionPane.NO_OPTION) {// Logic for "Log in as extern" option
-        	
+        }
         }
         
         else {
